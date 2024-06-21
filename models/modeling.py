@@ -89,6 +89,8 @@ class Attention(nn.Module):
         self.proj_dropout = Dropout(config.transformer["attention_dropout_rate"])
 
         self.softmax = Softmax(dim=-1)
+
+        # 对倒数第二个维度应用Softmax。如果输入是形状为
         self.softmax2 = Softmax(dim=-2)
 
     def transpose_for_scores(self, x):
@@ -255,7 +257,7 @@ class Block(nn.Module):
             self.ffn_norm.weight.copy_(np2th(weights[pjoin(ROOT, MLP_NORM, "scale")]))
             self.ffn_norm.bias.copy_(np2th(weights[pjoin(ROOT, MLP_NORM, "bias")]))
 
-            
+# 主要创新注意力模块            
 class MAWS(nn.Module):
     # mutual attention weight selection
     def __init__(self):
